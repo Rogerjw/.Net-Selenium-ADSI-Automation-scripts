@@ -33,16 +33,17 @@ namespace ADSAutomation.TestScripts
             _extent.AttachReporter(htmlReporter);
             _extent.AddSystemInfo("Host Name", "LocalHost");
             _extent.AddSystemInfo("Environment", "QA");
-        }
-
-        [SetUp]
-        public void Setup()
-        {
             _driver = new ChromeDriver();
             _driver.Manage().Window.Maximize();
             _driver.Navigate().GoToUrl(_baseUrl);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
             _test = _extent.CreateTest(TestContext.CurrentContext.Test.Name);
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            
         }
 
         [TearDown]
@@ -72,8 +73,6 @@ namespace ADSAutomation.TestScripts
                     break;
             }
             _test.Log(logstatus, "Test ended with" + logstatus + stacktrace);
-            _extent.Flush();
-            _driver.Quit();
         }
 
         [OneTimeTearDown]

@@ -11,6 +11,7 @@ namespace ADSAutomation.Pages
         private readonly By _username = By.Id("TxtUserName");
         private readonly By _password = By.Id("Txtpassword");
         private readonly By _login = By.Id("BtnSubmitLogin");
+        public readonly By _homePageElement = By.XPath("//a[text()='Home']");
         private IWebDriver driver;
 
         public LoginPage(IWebDriver driver):base(driver)
@@ -20,12 +21,12 @@ namespace ADSAutomation.Pages
 
         public void EnterUsername(string username)
         {
-            SendKeys(_username, username);
+            SendKeysWithClear(_username, username);
         }
 
         public void EnterPassword(string password)
         {
-            SendKeys(_password, password);
+            SendKeysWithClear(_password, password);
         }
 
         public void ClickLogInButton()

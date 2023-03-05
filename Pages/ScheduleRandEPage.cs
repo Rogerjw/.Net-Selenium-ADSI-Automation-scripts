@@ -6,10 +6,10 @@ using System.Text;
 
 namespace ADSAutomation.Pages
 {
-    public class ScheduleOximetryPage : Helpers
+    public class ScheduleRandEPage : Helpers
     {
-        private readonly By _scheduleTab = By.LinkText("Schedule"); 
-        private readonly By _scheduleOximetrySubmenu = By.LinkText("Schedule Oximetry");
+        private readonly By _scheduleTab = By.LinkText("Schedule");
+        private readonly By _scheduleRandESubmenu = By.LinkText("Schedule R&E");
         private readonly By _patientFirstName = By.Id("ctl00_ContentPlaceHolder1_tbschedule_tppatient_TxtFirstName");
         private readonly By _patientLastName = By.Id("ctl00_ContentPlaceHolder1_tbschedule_tppatient_TxtLastName");
         private readonly By _patientSubmit = By.Id("ctl00_ContentPlaceHolder1_tbschedule_tppatient_BtnSubmit");
@@ -28,16 +28,25 @@ namespace ADSAutomation.Pages
         private readonly By _scheduleOxiRXDate = By.Id("ctl00_ContentPlaceHolder1_tbschedule_tppnlschedule_txtDate");
         private readonly By _scheduleOxiSubmit = By.Id("ctl00_ContentPlaceHolder1_tbschedule_tppnlschedule_btnClick");
         private readonly By _scheduleOxiMessage = By.XPath("//div[@class='ui-dialog-content ui-widget-content']");
-        
-        public ScheduleOximetryPage(IWebDriver driver) : base(driver)
+
+        public ScheduleRandEPage(IWebDriver driver) : base(driver)
         {
 
-        }        
+        }
 
-        public void GoToScheduleOximetry()
+        public bool VerifyElementDisplayed(By by)
+        {
+            if (GetElement(by).Displayed)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void GoToScheduleRandE()
         {
             MouseHover(_scheduleTab);
-            Click(_scheduleOximetrySubmenu);
+            Click(_scheduleRandESubmenu);
         }
 
         public string SearchPatient(string fname, string lname)
@@ -50,8 +59,8 @@ namespace ADSAutomation.Pages
         }
 
         public void SelectGivenPatientRecord(string gname)
-        {            
-            Click(By.XPath("//a[text()='"+ gname + "']/ancestor::tr[@class='alt']/td[1]/input"));
+        {
+            Click(By.XPath("//a[text()='" + gname + "']/ancestor::tr[@class='alt']/td[1]/input"));
         }
 
         public void ClickPatientNext()
@@ -72,7 +81,7 @@ namespace ADSAutomation.Pages
             SendKeys(_physicianLasstName, lname);
             Click(_physicianSubmit);
             Loading(_loadingIcon);
-            Click(By.XPath("//a[text()='"+fname+"']/parent::*/parent::*/td/input"));
+            Click(By.XPath("//a[text()='" + fname + "']/parent::*/parent::*/td/input"));
             Click(_physicianNext);
             Loading(_loadingIcon);
         }
@@ -82,7 +91,7 @@ namespace ADSAutomation.Pages
             Click(_scheduleOxiDiagnosis);
             PageLoad();
             SwitchToWindow(1);
-            Click(By.XPath("//td[text()='"+ diagnosis + "']/parent::tr/td/input"));
+            Click(By.XPath("//td[text()='" + diagnosis + "']/parent::tr/td/input"));
             Click(_scheduleOxiDiagnosisSubmit);
             SwitchToWindow(0);
         }
@@ -107,7 +116,7 @@ namespace ADSAutomation.Pages
 
         public void ChooseRXOnFileCheckbox()
         {
-            Click(_scheduleOxiRXOnFile);            
+            Click(_scheduleOxiRXOnFile);
         }
 
         public void ChooseAOBOnFileCheckbox()
@@ -121,7 +130,7 @@ namespace ADSAutomation.Pages
         }
         public void ClickSubmit()
         {
-            Click(_scheduleOxiSubmit);            
+            Click(_scheduleOxiSubmit);
         }
         public bool VerifyMessage()
         {
